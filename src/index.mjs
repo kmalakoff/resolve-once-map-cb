@@ -3,15 +3,15 @@ import resolveOnce from 'resolve-once-cb';
 export default function resolveOnceMap(fn) {
   const resolvers = {};
 
-  return (key, callback) => {
+  return (key, _callback) => {
     if (!resolvers[key]) {
-      resolvers[key] = resolveOnce(() => {
+      resolvers[key] = resolveOnce((cb) => {
         try {
-          return callback(null, fn(key));
+          return fn(key, cb);
         } catch (err) {
-          return callback(err);
+          return cb(err);
         }
-      })
+      });
     }
     return resolvers[key]();
   };
