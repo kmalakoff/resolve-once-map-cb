@@ -3,7 +3,8 @@ import resolveOnce from 'resolve-once-cb';
 export default function resolveOnceMap(fn) {
   const resolvers = {};
 
-  return (key, _callback) => {
+  return (key, callback) => {
+    if (typeof callback !== 'function') throw new Error('resolve-once-mapp-cb missing callback');
     if (!resolvers[key]) {
       resolvers[key] = resolveOnce((cb) => {
         try {
@@ -13,6 +14,6 @@ export default function resolveOnceMap(fn) {
         }
       });
     }
-    return resolvers[key]();
+    return resolvers[key](callback);
   };
 }
