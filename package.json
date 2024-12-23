@@ -30,7 +30,6 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "resolve-once": "^0.5.0",
     "resolve-once-cb": "^0.1.2"
   },
   "devDependencies": {
