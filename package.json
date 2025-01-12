@@ -29,7 +29,7 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "resolve-once-cb": "^0.1.8"
+    "resolve-once-cb": "^0.1.9"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
