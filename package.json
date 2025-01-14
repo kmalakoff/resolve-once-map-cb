@@ -29,12 +29,12 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "resolve-once-cb": "^0.1.9"
+    "resolve-once-cb": "^0.1.10"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.10.6",
     "queue-cb": "^1.4.11"
   },
   "engines": {
