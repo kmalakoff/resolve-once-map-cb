@@ -17,7 +17,7 @@
   "license": "MIT",
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
   "main": "dist/cjs/index.cjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/cjs/index.d.cts",
   "files": [
     "dist"
   ],
@@ -29,7 +29,7 @@
     "version": "tsds version"
   },
   "dependencies": {
-    "resolve-once-cb": "^0.1.14"
+    "resolve-once-cb": "^0.1.15"
   },
   "devDependencies": {
     "@types/mocha": "*",
