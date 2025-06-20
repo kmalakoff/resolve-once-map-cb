@@ -32,12 +32,12 @@
   "scripts": {
     "build": "tsds build",
     "format": "biome check --write --unsafe",
-    "test": "tsds test:node --no-timeouts",
-    "test:engines": "nvu engines npm test",
+    "test": "mocha --no-timeouts test/**/*.test.*",
+    "test:engines": "nvu engines tsds test:node --no-timeouts",
     "version": "tsds version"
   },
   "dependencies": {
-    "resolve-once-cb": "^0.1.18"
+    "resolve-once-cb": "^0.1.19"
   },
   "devDependencies": {
     "@types/mocha": "*",
