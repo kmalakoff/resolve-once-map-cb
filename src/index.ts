@@ -1,12 +1,15 @@
-import resolveOnce from 'resolve-once-cb';
+import resolveOnce, { type Callback } from 'resolve-once-cb';
 
-export default function resolveOnceMap(fn) {
-  const resolvers = {};
+export type { Callback } from 'resolve-once-cb';
+export type Resolver<T> = (key: string, callback: Callback<T>) => undefined;
 
-  return (key, callback) => {
+export default function resolveOnceMap<T extends string | number | symbol>(fn: Resolver<T>): Resolver<T> {
+  const resolvers = {} as Record<T, Callback<T>>;
+
+  return (key: string, callback: Callback<T>) => {
     if (typeof callback !== 'function') throw new Error('resolve-once-map-cb missing callback');
     if (!resolvers[key]) {
-      resolvers[key] = resolveOnce((cb) => {
+      resolvers[key] = resolveOnce<T>((cb) => {
         try {
           return fn(key, cb);
         } catch (err) {
