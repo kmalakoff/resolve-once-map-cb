@@ -2,7 +2,7 @@ import assert from 'assert';
 import Queue from 'queue-cb';
 
 // @ts-ignore
-import resolveOnceMap from 'resolve-once-map-cb';
+import resolveOnceMap, { type Callback } from 'resolve-once-map-cb';
 
 describe('resolve-once-map-cb', () => {
   it('handle success', (callback) => {
@@ -83,12 +83,12 @@ describe('resolve-once-map-cb', () => {
   describe('errors', () => {
     it('missing callback', (done) => {
       const counters = {};
-      const resolver = resolveOnceMap((key, callback) => {
+      const resolver = resolveOnceMap<number>((key, callback) => {
         counters[key] = counters[key] || 0;
         callback(null, ++counters[key]);
       });
       try {
-        resolver();
+        resolver(undefined as string, undefined as Callback<number>);
         assert.ok(false, 'should not get here');
       } catch (err) {
         assert.ok(err.message.indexOf('missing callback') >= 0);
