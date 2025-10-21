@@ -1,7 +1,6 @@
 import assert from 'assert';
 import Queue from 'queue-cb';
 
-// @ts-ignore
 import resolveOnceMap, { type Callback } from 'resolve-once-map-cb';
 
 describe('resolve-once-map-cb', () => {
