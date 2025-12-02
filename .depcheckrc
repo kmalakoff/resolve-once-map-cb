@@ -1,1 +1,1 @@
-ignores: ["resolve-once-map-cb"]
+ignores: ["node-version-use", "ts-dev-stack", "@biomejs/biome", "resolve-once-map-cb"]
