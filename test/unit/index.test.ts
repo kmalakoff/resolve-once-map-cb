@@ -5,17 +5,17 @@ import resolveOnceMap, { type Callback } from 'resolve-once-map-cb';
 
 describe('resolve-once-map-cb', () => {
   it('handle success', (callback) => {
-    const counters = {};
+    const counters: Record<string, number> = {};
     const resolver = resolveOnceMap((key, callback) => {
       counters[key] = counters[key] || 0;
-      callback(null, ++counters[key]);
+      callback(undefined, ++counters[key]);
     });
 
-    const errors = [];
-    const results = [];
-    function collect(key, cb) {
+    const errors: (Error | undefined)[] = [];
+    const results: number[] = [];
+    function collect(key: string, cb: (error?: Error) => void) {
       resolver(key, (err, value) => {
-        err ? errors.push(err) : results.push(value);
+        err ? errors.push(err) : results.push(value as number);
         cb();
       });
     }
@@ -43,16 +43,16 @@ describe('resolve-once-map-cb', () => {
   });
 
   it('handle failure', (callback) => {
-    const counters = {};
+    const counters: Record<string, number> = {};
     const resolver = resolveOnceMap((key, callback) => {
       counters[key] = counters[key] || 0;
       ++counters[key];
       callback(new Error('Failed'));
     });
 
-    const errors = [];
-    const results = [];
-    function collect(key, cb) {
+    const errors: (Error | undefined)[] = [];
+    const results: unknown[] = [];
+    function collect(key: string, cb: (error?: Error) => void) {
       resolver(key, (err, value) => {
         err ? errors.push(err) : results.push(value);
         cb();
@@ -74,23 +74,23 @@ describe('resolve-once-map-cb', () => {
 
       resolver('one', (err) => {
         assert.deepEqual(counters, { one: 1, two: 1 });
-        assert.equal(err.message, 'Failed');
+        assert.equal((err as Error).message, 'Failed');
         callback();
       });
     });
   });
   describe('errors', () => {
     it('missing callback', (done) => {
-      const counters = {};
+      const counters: Record<string, number> = {};
       const resolver = resolveOnceMap<number>((key, callback) => {
         counters[key] = counters[key] || 0;
-        callback(null, ++counters[key]);
+        callback(undefined, ++counters[key]);
       });
       try {
-        resolver(undefined as string, undefined as Callback<number>);
+        resolver(undefined as unknown as string, undefined as unknown as Callback<number>);
         assert.ok(false, 'should not get here');
-      } catch (err) {
-        assert.ok(err.message.indexOf('missing callback') >= 0);
+      } catch (err: unknown) {
+        assert.ok((err as Error).message.indexOf('missing callback') >= 0);
         done();
       }
     });
