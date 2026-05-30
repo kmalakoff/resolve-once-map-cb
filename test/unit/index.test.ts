@@ -11,9 +11,9 @@ describe('resolve-once-map-cb', () => {
       callback(undefined, ++counters[key]);
     });
 
-    const errors: (Error | undefined)[] = [];
+    const errors: (Error | null)[] = [];
     const results: number[] = [];
-    function collect(key: string, cb: (error?: Error) => void) {
+    function collect(key: string, cb: (error?: Error | null) => void) {
       resolver(key, (err, value) => {
         err ? errors.push(err) : results.push(value as number);
         cb();
@@ -50,9 +50,9 @@ describe('resolve-once-map-cb', () => {
       callback(new Error('Failed'));
     });
 
-    const errors: (Error | undefined)[] = [];
+    const errors: (Error | null)[] = [];
     const results: unknown[] = [];
-    function collect(key: string, cb: (error?: Error) => void) {
+    function collect(key: string, cb: (error?: Error | null) => void) {
       resolver(key, (err, value) => {
         err ? errors.push(err) : results.push(value);
         cb();
