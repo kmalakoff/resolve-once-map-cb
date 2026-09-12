@@ -79,4 +79,20 @@ describe('resolve-once-map-cb', () => {
       });
     });
   });
+  describe('errors', () => {
+    it('missing callback', (done) => {
+      const counters = {};
+      const resolver = resolveOnceMap((key, callback) => {
+        counters[key] = counters[key] || 0;
+        callback(null, ++counters[key]);
+      });
+      try {
+        resolver();
+        assert.ok(false, 'should not get here');
+      } catch (err) {
+        assert.ok(err.message.indexOf('missing callback') >= 0);
+        done();
+      }
+    });
+  });
 });
