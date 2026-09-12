@@ -1,19 +1,27 @@
-## resolve-once-map-cb
+# resolve-once-map-cb
 
-Resolves a promise only once and memoizes the result in a map.
+Run a callback-based operation once per string key and memoize each result, including errors.
+
+```sh
+npm install resolve-once-map-cb
+```
 
 ## Usage
 
-```
-const { callbackify } = require('util');
+```js
 const resolveOnceMap = require('resolve-once-map-cb');
-const { MongoClient } = require('mongodb');
 
-const connection = resolveOnceMap((url, cb) => callbackify(MongoClient.connect)(url, cb));
-connection('mongodb://localhost:27017/database', (err, db1) => { });
-connection('mongodb://localhost:27017/database'. (err, db2) => { });
-// db1 === db2
+const resolveValue = resolveOnceMap((key, cb) => cb(null, { key }));
+resolveValue('one', (err, value1) => {
+  if (err) throw err;
+  resolveValue('one', (err, value2) => {
+    if (err) throw err;
+    console.log(value1 === value2); // true
 
-connection('mongodb://localhost:27017/database2', (err, db3) => { });
-// db1 !== db3
+    resolveValue('two', (err, value3) => {
+      if (err) throw err;
+      console.log(value1 === value3); // false
+    });
+  });
+});
 ```
